@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@layer utilities {
+  .animate-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .zoom-in {
+    animation: zoomIn 0.5s ease-in-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@theme {
+  --color-primary: #1B3022;
+  --color-accent: #E07A5F;
+  --color-cream: #F4F1DE;
+  --color-offwhite: #FDFCF8;
+
+  --font-family-sans: 'Inter', system-ui, sans-serif;
+}
