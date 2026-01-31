@@ -14,15 +14,24 @@ import {
   X,
   MapPin,
   Calendar,
-  CheckCircle2
+  CheckCircle2,
+  Navigation,
+  Smartphone,
+  Store,
+  Utensils,
+  Hotel,
+  Camera,
+  Music,
+  Church,
+  TreePine
 } from 'lucide-react';
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeRegion, setActiveRegion] = useState(null);
+  const [activeCity, setActiveCity] = useState(null);
   const [scrolled, setScrolled] = useState(false);
 
-  // Monitora o scroll para mudar o estilo do header
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -38,6 +47,81 @@ const App = () => {
     { id: 'graomogol', name: 'Grão Mogol & Itacambira', desc: 'O sertão das cordilheiras. Paisagens rústicas e isolamento total.', img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=600' }
   ];
 
+  const northCities = [
+    {
+      id: 'montesclaros',
+      name: 'Montes Claros',
+      subtitle: 'Portal do Norte de Minas',
+      img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=600',
+      attractions: ['Parque Municipal Guimarães Rosa', 'Lapa Grande', 'Mercado Municipal'],
+      commerce: ['Restaurante Dona Lucinha', 'Hotel Ibituruna', 'Artesanato Regional'],
+      events: [
+        { date: '15 Fev', name: 'Festival de Inverno' },
+        { date: '20 Mar', name: 'Feira de Artesanato' }
+      ]
+    },
+    {
+      id: 'diamantina',
+      name: 'Diamantina',
+      subtitle: 'Patrimônio da Humanidade UNESCO',
+      img: 'https://images.unsplash.com/photo-1582299532506-69a486576856?auto=format&fit=crop&q=80&w=600',
+      attractions: ['Centro Histórico', 'Casa de Juscelino', 'Caminho dos Escravos'],
+      commerce: ['Pousada do Garimpo', 'Restaurante Apocalipse', 'Loja de Cristais'],
+      events: [
+        { date: '10 Mar', name: 'Vesperata' },
+        { date: '05 Abr', name: 'Festival de Música' }
+      ]
+    },
+    {
+      id: 'janauba',
+      name: 'Janaúba',
+      subtitle: 'Terra da Jabuticaba',
+      img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=600',
+      attractions: ['Fazendas Históricas', 'Cachoeira do Riachão', 'Praça da Matriz'],
+      commerce: ['Restaurante Sabor do Cerrado', 'Hotel Janaúba', 'Feira Livre'],
+      events: [
+        { date: '25 Fev', name: 'Festa da Jabuticaba' },
+        { date: '12 Abr', name: 'Rodeio Regional' }
+      ]
+    },
+    {
+      id: 'itacambira',
+      name: 'Itacambira',
+      subtitle: 'Berço das Águas',
+      img: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&q=80&w=600',
+      attractions: ['Cachoeiras', 'Trilhas Ecológicas', 'Mirante do Cruzeiro'],
+      commerce: ['Pousada das Cachoeiras', 'Restaurante Mineiro', 'Artesanato Local'],
+      events: [
+        { date: '18 Mar', name: 'Encontro de Trilheiros' },
+        { date: '22 Abr', name: 'Festa do Padroeiro' }
+      ]
+    },
+    {
+      id: 'botumirim',
+      name: 'Botumirim',
+      subtitle: 'Natureza Preservada',
+      img: 'https://images.unsplash.com/photo-1527489377706-5bf97e608852?auto=format&fit=crop&q=80&w=600',
+      attractions: ['Parque Estadual', 'Cachoeira do Lajeado', 'Grutas'],
+      commerce: ['Camping Ecológico', 'Bar e Restaurante Central', 'Guias Locais'],
+      events: [
+        { date: '08 Mar', name: 'Caminhada Ecológica' },
+        { date: '30 Abr', name: 'Festival de Ecoturismo' }
+      ]
+    },
+    {
+      id: 'graomogol',
+      name: 'Grão Mogol',
+      subtitle: 'Capital do Cristal',
+      img: 'https://images.unsplash.com/photo-1590532938153-f38b0f1648a8?auto=format&fit=crop&q=80&w=600',
+      attractions: ['Cachoeira do Itacambiruçu', 'Minas de Cristal', 'Trilha do Pico'],
+      commerce: ['Pousada Sempre Viva', 'Restaurante Sabor da Serra', 'Loja de Cristais'],
+      events: [
+        { date: '14 Mar', name: 'Feira de Cristais' },
+        { date: '28 Abr', name: 'Festival das Sempre-Vivas' }
+      ]
+    }
+  ];
+
   const expeditions = [
     {
       title: "Travessia Lapinha-Tabuleiro",
@@ -48,16 +132,16 @@ const App = () => {
       desc: "A travessia mais icônica do Espinhaço, culminando na maior queda d'água de MG."
     },
     {
-      title: "Parque da Lapa Grande",
-      tag: "História & Cavernas",
+      title: "Rota do Norte de Minas",
+      tag: "Cultura & Natureza",
       level: "Moderado",
-      duration: "1 dia",
+      duration: "7 dias",
       img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=600",
-      desc: "Exploração de grutas e sítios arqueológicos em Montes Claros."
+      desc: "Circuito completo pelas 6 cidades: Montes Claros, Diamantina, Janaúba, Itacambira, Botumirim e Grão Mogol."
     },
     {
       title: "Caminhos de Diamantina",
-      tag: "Cultura & Natureza",
+      tag: "Patrimônio UNESCO",
       level: "Fácil",
       duration: "2 dias",
       img: "https://images.unsplash.com/photo-1527489377706-5bf97e608852?auto=format&fit=crop&q=80&w=600",
@@ -76,28 +160,28 @@ const App = () => {
             <span className="font-bold text-xl tracking-tighter uppercase">Cordilheira do Espinhaço</span>
           </div>
 
-          {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8 font-medium">
             <a href="#projeto" className="hover:text-[#E07A5F] transition">O Projeto</a>
-            <a href="#expedicoes" className="hover:text-[#E07A5F] transition">Expedições</a>
+            <a href="#rota-norte" className="hover:text-[#E07A5F] transition">Rota do Norte</a>
+            <a href="#agenda" className="hover:text-[#E07A5F] transition">Agenda</a>
+            <a href="#app" className="hover:text-[#E07A5F] transition">App</a>
             <a href="#patrocinio" className="hover:text-[#E07A5F] transition">Seja Parceiro</a>
-            <a href="#contato" className="hover:text-[#E07A5F] transition">Contato</a>
             <button className="bg-[#E07A5F] text-white px-6 py-2 rounded-full hover:bg-[#c96a51] transition shadow-lg">
               Agendar Aventura
             </button>
           </div>
 
-          {/* Mobile Toggle */}
           <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
 
-        {/* Mobile Menu Overlay */}
         {isMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-white text-slate-800 flex flex-col p-6 gap-4 shadow-xl">
             <a href="#projeto" onClick={() => setIsMenuOpen(false)}>O Projeto</a>
-            <a href="#expedicoes" onClick={() => setIsMenuOpen(false)}>Expedições</a>
+            <a href="#rota-norte" onClick={() => setIsMenuOpen(false)}>Rota do Norte</a>
+            <a href="#agenda" onClick={() => setIsMenuOpen(false)}>Agenda</a>
+            <a href="#app" onClick={() => setIsMenuOpen(false)}>App</a>
             <a href="#patrocinio" onClick={() => setIsMenuOpen(false)}>Seja Parceiro</a>
             <button className="bg-[#E07A5F] text-white px-6 py-3 rounded-md">Agendar Aventura</button>
           </div>
@@ -115,86 +199,225 @@ const App = () => {
         </div>
         <div className="relative z-10 container mx-auto px-6 text-center text-white">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight max-w-4xl mx-auto">
-            A Cordilheira do Brasil: Descubra a Alma de Minas Gerais.
+            A Cordilheira do Brasil: Descubra o Norte de Minas Gerais.
           </h1>
           <p className="text-xl md:text-2xl mb-10 max-w-2xl mx-auto text-slate-100 font-light">
-            Trekking, Cultura e História na única cordilheira do Brasil. Uma imersão profunda na Reserva da Biosfera da UNESCO.
+            Rota completa por 6 cidades históricas. Trekking, Cultura e História na Reserva da Biosfera da UNESCO.
           </p>
           <div className="flex flex-col md:flex-row justify-center gap-4">
             <button className="bg-[#E07A5F] text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-[#c96a51] transition shadow-2xl flex items-center justify-center gap-2">
-              Escolha seu Destino <ArrowRight className="w-5 h-5" />
+              Explorar Rota do Norte <ArrowRight className="w-5 h-5" />
             </button>
             <button className="bg-white/10 backdrop-blur-md border border-white/30 text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-white/20 transition">
-              Conheça o Projeto
+              Baixar App de Navegação
             </button>
           </div>
         </div>
       </section>
 
-      {/* Mapa Interativo */}
-      <section id="projeto" className="py-24 container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
-          <div className="lg:w-1/2">
-            <span className="text-[#E07A5F] font-bold tracking-widest uppercase text-sm mb-4 block">Território Sagrado</span>
-            <h2 className="text-4xl font-bold text-[#1B3022] mb-6">Do Quadrilátero Ferrífero ao Sertão</h2>
-            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-              Explore 1.000km de biodiversidade e história através da espinha dorsal do nosso estado. Clique nas regiões para descobrir os segredos de cada maciço.
+      {/* Rota do Norte de Minas - 6 Cidades */}
+      <section id="rota-norte" className="py-24 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="text-[#E07A5F] font-bold tracking-widest uppercase text-sm mb-4 block">Circuito Completo</span>
+            <h2 className="text-4xl font-bold text-[#1B3022] mb-6">Rota das 6 Cidades do Norte de Minas</h2>
+            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+              Um roteiro integrado conectando história, natureza e cultura. De Montes Claros a Grão Mogol, cada cidade revela um pedaço único do Espinhaço.
             </p>
-
-            <div className="grid grid-cols-1 gap-4">
-              {regions.map((region) => (
-                <div
-                  key={region.id}
-                  onMouseEnter={() => setActiveRegion(region)}
-                  className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center gap-4 ${activeRegion?.id === region.id ? 'border-[#E07A5F] bg-white shadow-md' : 'border-slate-100 bg-slate-50'}`}
-                >
-                  <MapPin className={`w-6 h-6 ${activeRegion?.id === region.id ? 'text-[#E07A5F]' : 'text-slate-400'}`} />
-                  <div>
-                    <h4 className="font-bold text-[#1B3022]">{region.name}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
-          <div className="lg:w-1/2 relative bg-[#F4F1DE] p-8 rounded-3xl min-h-[500px] flex items-center justify-center shadow-inner overflow-hidden">
-            {activeRegion ? (
-              <div className="animate-in fade-in zoom-in duration-500 flex flex-col items-center">
-                <img src={activeRegion.img} alt={activeRegion.name} className="w-full h-64 object-cover rounded-2xl mb-6 shadow-lg" />
-                <h3 className="text-2xl font-bold text-[#1B3022] mb-2">{activeRegion.name}</h3>
-                <p className="text-center text-slate-600 px-4">{activeRegion.desc}</p>
-              </div>
-            ) : (
-              <div className="text-center text-slate-400 opacity-60">
-                <MapIcon className="w-20 h-20 mx-auto mb-4" />
-                <p className="text-xl font-medium">Selecione uma região no mapa ao lado</p>
-              </div>
-            )}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {northCities.map((city, idx) => (
+              <div
+                key={city.id}
+                onMouseEnter={() => setActiveCity(city)}
+                className={`bg-white rounded-2xl overflow-hidden shadow-lg border-2 transition-all cursor-pointer ${activeCity?.id === city.id ? 'border-[#E07A5F] scale-105' : 'border-slate-100'}`}
+              >
+                <div className="h-48 overflow-hidden relative">
+                  <img src={city.img} alt={city.name} className="w-full h-full object-cover" />
+                  <div className="absolute top-4 right-4 bg-[#E07A5F] text-white px-3 py-1 rounded-full text-xs font-bold">
+                    Cidade {idx + 1}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold text-[#1B3022] mb-1">{city.name}</h3>
+                  <p className="text-sm text-[#E07A5F] mb-4 font-medium">{city.subtitle}</p>
 
-            {/* Visual stylization of the "Spine" */}
-            <div className="absolute left-0 top-0 w-2 h-full bg-gradient-to-b from-transparent via-[#1B3022]/10 to-transparent" />
+                  <div className="mb-4">
+                    <h4 className="font-bold text-sm text-slate-700 mb-2 flex items-center gap-2">
+                      <Camera className="w-4 h-4" /> O que Encontrar:
+                    </h4>
+                    <ul className="text-sm text-slate-600 space-y-1">
+                      {city.attractions.slice(0, 3).map((attr, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <CheckCircle2 className="w-3 h-3 text-[#E07A5F] mt-1 flex-shrink-0" />
+                          <span>{attr}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mb-4">
+                    <h4 className="font-bold text-sm text-slate-700 mb-2 flex items-center gap-2">
+                      <Store className="w-4 h-4" /> Parceiros Locais:
+                    </h4>
+                    <ul className="text-xs text-slate-500 space-y-1">
+                      {city.commerce.map((com, i) => (
+                        <li key={i}>• {com}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <button className="w-full bg-[#1B3022] text-white py-2 rounded-lg text-sm font-bold hover:bg-[#2c4d36] transition">
+                    Ver Detalhes
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 bg-[#F4F1DE] rounded-3xl p-10 text-center">
+            <Navigation className="w-12 h-12 text-[#E07A5F] mx-auto mb-4" />
+            <h3 className="text-2xl font-bold text-[#1B3022] mb-4">Planeje sua Rota Completa</h3>
+            <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
+              Nosso app de navegação conecta as 6 cidades com rotas otimizadas, pontos de parada estratégicos e informações em tempo real sobre eventos e comércio local.
+            </p>
+            <button className="bg-[#1B3022] text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 mx-auto hover:bg-[#2c4d36] transition">
+              <Smartphone className="w-5 h-5" /> Baixar App Gratuito
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Agenda de Eventos */}
+      <section id="agenda" className="py-24 bg-[#1B3022] text-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Agenda de Eventos 2024</h2>
+            <p className="text-slate-300 max-w-2xl mx-auto">Festivais, feiras e celebrações nas 6 cidades do Norte de Minas. Planeje sua visita e participe da cultura local.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {northCities.map((city) => (
+              <div key={city.id} className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <h3 className="text-xl font-bold mb-1 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-[#E07A5F]" />
+                  {city.name}
+                </h3>
+                <p className="text-sm text-slate-400 mb-4">{city.subtitle}</p>
+
+                <div className="space-y-3">
+                  {city.events.map((event, idx) => (
+                    <div key={idx} className="flex items-start gap-3 bg-white/5 p-3 rounded-lg">
+                      <div className="bg-[#E07A5F] px-3 py-2 rounded-lg text-center min-w-[60px]">
+                        <div className="text-xs font-bold">{event.date.split(' ')[1]}</div>
+                        <div className="text-lg font-black">{event.date.split(' ')[0]}</div>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-sm">{event.name}</h4>
+                        <p className="text-xs text-slate-400">Evento cultural local</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <button className="bg-[#E07A5F] text-white px-8 py-4 rounded-full font-bold hover:bg-[#c96a51] transition">
+              Ver Calendário Completo 2024
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* App de Rota */}
+      <section id="app" className="py-24 bg-[#F4F1DE]">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            <div className="lg:w-1/2">
+              <span className="text-[#E07A5F] font-bold tracking-widest uppercase text-sm mb-4 block">Tecnologia & Aventura</span>
+              <h2 className="text-4xl font-bold text-[#1B3022] mb-6">App de Navegação Cordilheira do Espinhaço</h2>
+              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+                Navegue com segurança pelas rotas do Norte de Minas. GPS offline, pontos de interesse, parceiros comerciais e agenda de eventos integrada.
+              </p>
+
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start gap-4">
+                  <div className="bg-white p-3 rounded-xl shadow-sm">
+                    <Navigation className="w-6 h-6 text-[#E07A5F]" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">Rotas Otimizadas</h4>
+                    <p className="text-slate-600">Conecte as 6 cidades com o melhor trajeto, incluindo paradas estratégicas.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-white p-3 rounded-xl shadow-sm">
+                    <MapPin className="w-6 h-6 text-[#E07A5F]" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">Pontos de Interesse</h4>
+                    <p className="text-slate-600">Cachoeiras, mirantes, restaurantes, hotéis e comércio local mapeados.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-white p-3 rounded-xl shadow-sm">
+                    <Calendar className="w-6 h-6 text-[#E07A5F]" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">Agenda Integrada</h4>
+                    <p className="text-slate-600">Eventos culturais e festivais sincronizados com sua rota.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <button className="bg-[#1B3022] text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-[#2c4d36] transition">
+                  <Download className="w-5 h-5" /> Download iOS
+                </button>
+                <button className="bg-[#1B3022] text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-[#2c4d36] transition">
+                  <Download className="w-5 h-5" /> Download Android
+                </button>
+              </div>
+            </div>
+
+            <div className="lg:w-1/2">
+              <div className="bg-white p-8 rounded-3xl shadow-2xl">
+                <div className="bg-slate-100 rounded-2xl h-[500px] flex items-center justify-center">
+                  <div className="text-center text-slate-400">
+                    <Smartphone className="w-24 h-24 mx-auto mb-4" />
+                    <p className="text-lg font-medium">Preview do App</p>
+                    <p className="text-sm">Interface de navegação</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Expedições */}
-      <section id="expedicoes" className="py-24 bg-[#1B3022] text-white">
+      <section id="expedicoes" className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Nossas Expedições</h2>
-            <p className="text-slate-300 max-w-2xl mx-auto">Roteiros pensados para quem busca o máximo de conexão com a natureza, respeitando os limites do corpo e do meio ambiente.</p>
+            <h2 className="text-4xl font-bold mb-4 text-[#1B3022]">Nossas Expedições</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">Roteiros pensados para quem busca o máximo de conexão com a natureza, respeitando os limites do corpo e do meio ambiente.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {expeditions.map((exp, idx) => (
-              <div key={idx} className="bg-white rounded-2xl overflow-hidden group shadow-xl">
+              <div key={idx} className="bg-white rounded-2xl overflow-hidden group shadow-xl border border-slate-100">
                 <div className="h-64 overflow-hidden relative">
                   <img src={exp.img} alt={exp.title} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
-                  <div className="absolute top-4 left-4 bg-[#E07A5F] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                  <div className="absolute top-4 left-4 bg-[#E07A5F] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-white">
                     {exp.tag}
                   </div>
                 </div>
-                <div className="p-6 text-slate-800">
+                <div className="p-6">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-xs font-bold text-slate-400 flex items-center gap-1 uppercase tracking-widest">
                       <Compass className="w-3 h-3" /> {exp.level}
@@ -216,9 +439,9 @@ const App = () => {
       </section>
 
       {/* B2B Section - Patrocinadores */}
-      <section id="patrocinio" className="py-24 bg-white">
+      <section id="patrocinio" className="py-24 bg-[#F4F1DE]">
         <div className="container mx-auto px-6">
-          <div className="bg-[#F4F1DE] rounded-[3rem] p-10 lg:p-20 overflow-hidden relative">
+          <div className="bg-white rounded-[3rem] p-10 lg:p-20 overflow-hidden relative shadow-xl">
             <div className="absolute -right-20 -top-20 w-80 h-80 bg-[#1B3022]/5 rounded-full blur-3xl" />
 
             <div className="flex flex-col lg:flex-row gap-12 items-center relative z-10">
@@ -226,7 +449,7 @@ const App = () => {
                 <h2 className="text-4xl font-bold text-[#1B3022] mb-6">Associe sua marca à grandeza do Espinhaço.</h2>
                 <div className="space-y-6">
                   <div className="flex gap-4">
-                    <div className="bg-white p-3 rounded-xl shadow-sm h-fit">
+                    <div className="bg-[#F4F1DE] p-3 rounded-xl shadow-sm h-fit">
                       <Users className="text-[#E07A5F]" />
                     </div>
                     <div>
@@ -235,7 +458,7 @@ const App = () => {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <div className="bg-white p-3 rounded-xl shadow-sm h-fit">
+                    <div className="bg-[#F4F1DE] p-3 rounded-xl shadow-sm h-fit">
                       <ShieldCheck className="text-[#E07A5F]" />
                     </div>
                     <div>
@@ -244,7 +467,7 @@ const App = () => {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <div className="bg-white p-3 rounded-xl shadow-sm h-fit">
+                    <div className="bg-[#F4F1DE] p-3 rounded-xl shadow-sm h-fit">
                       <CheckCircle2 className="text-[#E07A5F]" />
                     </div>
                     <div>
@@ -265,46 +488,17 @@ const App = () => {
               <div className="lg:w-1/2 text-center">
                 <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Parceiros Estratégicos</p>
                 <div className="grid grid-cols-2 gap-8 opacity-40 grayscale hover:grayscale-0 transition duration-500">
-                  <div className="flex items-center justify-center p-4 bg-white rounded-xl shadow-sm">
+                  <div className="flex items-center justify-center p-4 bg-[#F4F1DE] rounded-xl shadow-sm">
                     <span className="font-black text-2xl italic text-slate-400">IEF MG</span>
                   </div>
-                  <div className="flex items-center justify-center p-4 bg-white rounded-xl shadow-sm">
+                  <div className="flex items-center justify-center p-4 bg-[#F4F1DE] rounded-xl shadow-sm">
                     <span className="font-black text-2xl italic text-slate-400">UNESCO</span>
                   </div>
-                  <div className="flex items-center justify-center p-4 bg-white rounded-xl shadow-sm">
+                  <div className="flex items-center justify-center p-4 bg-[#F4F1DE] rounded-xl shadow-sm">
                     <span className="font-black text-2xl italic text-slate-400">SECULT</span>
                   </div>
-                  <div className="flex items-center justify-center p-4 bg-white rounded-xl shadow-sm">
+                  <div className="flex items-center justify-center p-4 bg-[#F4F1DE] rounded-xl shadow-sm">
                     <span className="font-black text-2xl italic text-slate-400">BIOBR</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof */}
-      <section className="py-24 bg-[#FDFCF8]">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            <div className="lg:w-1/2 rounded-[2rem] overflow-hidden shadow-2xl">
-              <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&q=80&w=1000" alt="Group of hikers" className="w-full h-full object-cover" />
-            </div>
-            <div className="lg:w-1/2">
-              <h2 className="text-4xl font-bold text-[#1B3022] mb-6">Mais que uma agência, uma comunidade.</h2>
-              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                Nossos guias não são apenas condutores, são entusiastas da história mineira e guardiões da montanha. Segurança total, logística impecável e respeito absoluto à cultura local.
-              </p>
-
-              {/* Testemunho Fictício */}
-              <div className="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-[#E07A5F] italic">
-                <p className="text-slate-700 mb-4">"Atravessar o Espinhaço com a equipe foi transformador. O nível de cuidado e o conhecimento sobre a geologia e história local tornam cada passo uma aula."</p>
-                <div className="flex items-center gap-3 not-italic">
-                  <div className="w-12 h-12 bg-[#E07A5F] rounded-full flex items-center justify-center text-white font-bold">RM</div>
-                  <div>
-                    <h5 className="font-bold text-[#1B3022]">Ricardo Mendes</h5>
-                    <p className="text-sm text-slate-400">Empresário e Trilheiro</p>
                   </div>
                 </div>
               </div>
@@ -331,10 +525,11 @@ const App = () => {
           <div>
             <h4 className="font-bold mb-6 text-lg">Navegação</h4>
             <ul className="space-y-4 text-slate-400 text-sm">
-              <li><a href="#" className="hover:text-white transition">Expedições</a></li>
-              <li><a href="#" className="hover:text-white transition">Agenda 2024</a></li>
-              <li><a href="#" className="hover:text-white transition">Seja Parceiro</a></li>
-              <li><a href="#" className="hover:text-white transition">Trabalhe Conosco</a></li>
+              <li><a href="#expedicoes" className="hover:text-white transition">Expedições</a></li>
+              <li><a href="#rota-norte" className="hover:text-white transition">Rota do Norte</a></li>
+              <li><a href="#agenda" className="hover:text-white transition">Agenda 2024</a></li>
+              <li><a href="#app" className="hover:text-white transition">App de Navegação</a></li>
+              <li><a href="#patrocinio" className="hover:text-white transition">Seja Parceiro</a></li>
             </ul>
           </div>
 
